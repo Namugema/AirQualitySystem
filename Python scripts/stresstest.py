@@ -1,4 +1,9 @@
 from locust import HttpUser, TaskSet, task, between
+import datetime
+import random
+
+# Define a list of country codes with an empty string to represent an empty/null value
+COUNTRY_CODES = ["US", "CA", "GB", "DE", "FR", "JP", "AU", "IN", "CN", "BR", ""]
 
 class UserBehavior(TaskSet):
     
@@ -7,10 +12,18 @@ class UserBehavior(TaskSet):
         # This is the URL for the form POST data.
         submit_url = "http://whyme-env.eba-h9z3xdpk.us-east-1.elasticbeanstalk.com/Home/DownloadCsv"
 
-        # simulation data for form fields.
+        # Generate dynamic dates for testing
+        start_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%d/%m/%Y')
+        end_date = datetime.datetime.now().strftime('%d/%m/%Y')
+
+        # Randomly select a country code from the list or an empty string
+        country_code = random.choice(COUNTRY_CODES)
+
+        # Simulation data for form fields.
         form_data = {
-            "timestamp": "2022-06-21 12:56:19",  # You might want to generate a dynamic timestamp
-            "id": "10995737600"  # If the ID needs to be dynamic, generate it accordingly
+            "StartDate": start_date,
+            "EndDate": end_date,
+            "Country": country_code
         }
 
         # Submit a POST request to the form submission URL with the form data.
