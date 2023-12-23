@@ -1,7 +1,13 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using AirQualtiySystem.Services;
+using Amazon.DynamoDBv2;
+using Amazon;
+using Microsoft.AspNetCore.Builder;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<DynamoDBService>();
 
 var app = builder.Build();
 

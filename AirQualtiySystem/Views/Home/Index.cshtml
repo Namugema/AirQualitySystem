@@ -2,8 +2,39 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model AirQualityQueryModel
+
+@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"]?.ToString()))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["ErrorMessage"].ToString()
+    </div>
+}
+<h2 class="textcenter">Air Quality System</h2></br>
+<div class="row">
+    <div class="col-md-6 offset-md-1">
+        <form id="filterForm" asp-action="DownloadCsv" method="post">
+            <p><b>Date Range</b></p>
+            <div class="form-group">
+                <label for="startdate">Start Date:</label>
+                <input type="date" class="form-control" asp-for="StartDate">
+            </div></br>
+
+            <div class="form-group">
+                <label for="enddate">End Date:</label>
+                <input type="date" class="form-control" asp-for="EndDate">
+            </div></br>
+
+            <p><b>Optional</b></p>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" class="form-control" asp-for="Country" placeholder="Enter country code (e.g., US)">
+            </div>
+
+            <br />
+
+            <button type="submit" class="btn btn-primary btn-block">Download</button>
+        </form>
+    </div>
 </div>
 
