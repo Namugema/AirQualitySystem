@@ -7,6 +7,7 @@ namespace AirQualtiySystem.Models
         public long id { get; set; }
         public string? locationJson { get; set; }
         public double? sampling_rate { get; set; }
+        public int? AQI { get; set; }
         public string? sensorJson { get; set; }
         public string? sensorDataValuesJson { get; set; }
 
@@ -22,7 +23,7 @@ namespace AirQualtiySystem.Models
         public long? id { get; set; }
         public string? altitude { get; set; }
         public string? country { get; set; }
-        public int? exactlocation { get; set; }
+        public int? exact_location { get; set; }
         public int? indoor { get; set; }
         public string? latitude { get; set; }
         public string? longitude { get; set; }

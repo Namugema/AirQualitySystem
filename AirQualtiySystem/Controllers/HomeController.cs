@@ -67,19 +67,29 @@ public class HomeController : Controller
         var csvBuilder = new StringBuilder();
 
         // Add header
-        csvBuilder.AppendLine("Id,Timestamp,Country,Location,Sensor,Sensor Data Values"); // Update headers as per your data structure
+        csvBuilder.AppendLine("Id,Timestamp,Country,Altitude,ExactLocation,Indoor,Latitude,Longitude,SensorId,SensorPin,SensorTypeName,SensorManufacturer,SensorDataValues");
 
         foreach (var item in data)
         {
-            // Extract country from location JSON and handle nulls
-            var locationCountry = "";
-            if (item.location != null && item.location.country != null)
-            {
-                locationCountry = item.location.country;
-            }
+            // Extract properties from JSON objects and handle nulls
+            var locationCountry = item.location?.country ?? "";
+            var altitude = item.location?.altitude ?? "";
+            var exactLocation = item.location?.exact_location?.ToString() ?? "";
+            var indoor = item.location?.indoor?.ToString() ?? "";
+            var latitude = item.location?.latitude ?? "";
+            var longitude = item.location?.longitude ?? "";
+
+            var sensorId = item.sensor?.id?.ToString() ?? "";
+            var sensorPin = item.sensor?.pin ?? "";
+            var sensorTypeName = item.sensor?.sensor_type?.name ?? "";
+            var sensorManufacturer = item.sensor?.sensor_type?.manufacturer ?? "";
+
+            var sensorDataValues = item.sensordatavalues != null
+                ? string.Join(";", item.sensordatavalues.Select(sdv => $"[{sdv.id}, {sdv.value}, {sdv.value_type}]"))
+                : "";
 
             // Convert each item to a CSV row and append
-            csvBuilder.AppendLine($"{item.id},{item.timestamp},{locationCountry},{item.locationJson},{item.sensorJson},{item.sensorDataValuesJson}"); // Update as per your model properties
+            csvBuilder.AppendLine($"{item.id},{item.timestamp},{locationCountry},{altitude},{exactLocation},{indoor},{latitude},{longitude},{sensorId},{sensorPin},{sensorTypeName},{sensorManufacturer},{sensorDataValues}");
         }
 
         return csvBuilder.ToString();
