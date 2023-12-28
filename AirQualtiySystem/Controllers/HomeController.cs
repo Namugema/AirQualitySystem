@@ -67,7 +67,7 @@ public class HomeController : Controller
         var csvBuilder = new StringBuilder();
 
         // Add header
-        csvBuilder.AppendLine("Id,Timestamp,Country,Altitude,ExactLocation,Indoor,Latitude,Longitude,SensorId,SensorPin,SensorTypeName,SensorManufacturer,SensorDataValues");
+        csvBuilder.AppendLine("Id,Timestamp,Country,AQI,Altitude,ExactLocation,Indoor,Latitude,Longitude,SensorId,SensorPin,SensorTypeName,SensorManufacturer,SensorDataValues");
 
         foreach (var item in data)
         {
@@ -89,7 +89,7 @@ public class HomeController : Controller
                 : "";
 
             // Convert each item to a CSV row and append
-            csvBuilder.AppendLine($"{item.id},{item.timestamp},{locationCountry},{altitude},{exactLocation},{indoor},{latitude},{longitude},{sensorId},{sensorPin},{sensorTypeName},{sensorManufacturer},{sensorDataValues}");
+            csvBuilder.AppendLine($"{item.id},{item.timestamp},{locationCountry},{item.AQI},{altitude},{exactLocation},{indoor},{latitude},{longitude},{sensorId},{sensorPin},{sensorTypeName},{sensorManufacturer},{sensorDataValues}");
         }
 
         return csvBuilder.ToString();
